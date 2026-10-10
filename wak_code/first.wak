@@ -1,0 +1,18 @@
+let name = "Alex";
+let score = [87, 93, 100];1
+
+fn avg(val) {
+    let total = 0;
+
+    for score in values {
+        total = total + score;
+    }
+
+    return total/len(val)
+}
+
+if avg(score) >= 90 {
+    print "Great job, " + name;
+} else {
+    print "Keep going, " + name;
+}
