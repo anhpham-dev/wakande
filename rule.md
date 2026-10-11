@@ -38,3 +38,13 @@ Rule when collecting chars
 - The remaining char can be either letters, digits or _
 - example: total, my_var, score2, _priv, ....
 - invalid: 2score, my-var
+
+AST (abstract syntax tree)
+- expression -> num
+  - expression + expression
+  - expression - expression
+  - expression * expression
+  - expression / expression
+  - ( expression )
+
+environment to store variables
