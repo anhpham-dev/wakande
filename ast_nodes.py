@@ -22,3 +22,8 @@ class VariableDeclaration:
 @dataclass
 class Program:
     statements: list
+
+@dataclass
+class UnaryExpression:
+    operator: object
+    operand: object

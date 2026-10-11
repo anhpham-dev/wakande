@@ -1,4 +1,4 @@
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression
 
 def evaluate(node, environment):
     if isinstance(node, Program):
@@ -35,3 +35,9 @@ def evaluate(node, environment):
         value = evaluate(node.initializer, environment)
         environment[node.name] = value
         return value
+    
+    elif isinstance(node, UnaryExpression):
+        operand = evaluate(node.operand, environment)
+
+        if node.operator.kind == "MINUS":
+            return -operand

@@ -1,5 +1,5 @@
 from lexer import Lexer
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression
 
 class Parser:
     def __init__(self, tokens):
@@ -37,7 +37,11 @@ class Parser:
         if token.kind in ("EOF", "NEWLINE"):
             raise ValueError(f"Expected an expression at line {token.line}, column: {token.column}")
 
-        if self.peek().kind == "NUMBER":
+        if token.kind == "MINUS":
+            operator = self.advance()
+            operand = self.parse_factor()
+            return UnaryExpression(operator, operand)
+        elif self.peek().kind == "NUMBER":
             return self.parse_number()
         elif self.peek().kind == "LPAREN":
             self.advance()

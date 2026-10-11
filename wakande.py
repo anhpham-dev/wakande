@@ -2,7 +2,7 @@ from lexer import Lexer
 from parser import Parser
 from interpreter import evaluate
 
-source = "let 123 = 5"
+source = "let x = --5\nlet y = 10\nx + y"
 
 lexer = Lexer(source)
 tokens = lexer.tokenize()
