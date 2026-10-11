@@ -33,6 +33,10 @@ class Parser:
         # return BinaryExpression(left, operation, right)
 
     def parse_factor(self):
+        token = self.peek()
+        if token.kind in ("EOF", "NEWLINE"):
+            raise ValueError(f"Expected an expression at line {token.line}, column: {token.column}")
+
         if self.peek().kind == "NUMBER":
             return self.parse_number()
         elif self.peek().kind == "LPAREN":
@@ -46,7 +50,7 @@ class Parser:
             current_token = self.advance()
             return Variable(current_token.value)
         else:
-            token = self.peek()
+            # token = self.peek()
             raise ValueError(f"Expected a number or '(', got {token.kind} at line {token.line}, column {token.column}")
 
     def parse_term(self):
@@ -61,13 +65,14 @@ class Parser:
     
     def parse_variable_declaration(self):
         let = self.advance()
+        token = self.peek()
 
         if self.peek().kind != "IDENTIFIER":
-            raise ValueError("Expected a variable name")
+            raise ValueError(f"Expected a variable name, got {token.kind} at line {token.line}, column {token.column}")
         var_name = self.advance().value
 
         if self.peek().kind != "EQUALS":
-            raise ValueError("Expected equal sign")
+            raise ValueError(f"Expected an equal sign, got {token.kind} at line {token.line}, column {token.column}")
         self.advance()
 
         initializer = self.parse_expression()
