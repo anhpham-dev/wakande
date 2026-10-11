@@ -18,3 +18,7 @@ class Variable:
 class VariableDeclaration:
     name: str
     initializer: object
+
+@dataclass
+class Program:
+    statements: list

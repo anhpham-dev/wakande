@@ -57,7 +57,7 @@ class Lexer:
             while self.peek().isdigit():
                 digits.append(self.advance())
             
-        if self.peek(1).isalpha():
+        if self.peek().isalpha() or self.peek() == "_":
             raise ValueError(f"Invalid Number Identifier at line: {start_line}, column: {start_column}")
 
         text = "".join(digits)
@@ -66,9 +66,15 @@ class Lexer:
         return Token("NUMBER", value, start_line, start_column)
     
     def next_token(self):
-        while self.peek() in [" ", "\t", "\r", "\n"]:
+        while self.peek() in [" ", "\t", "\r"]:
             self.advance()
         
+        if self.peek() == "\n":
+            line = self.line
+            col = self.column
+            self.advance()
+            return Token("NEWLINE", "\n", line, col)
+
         line = self.line
         col = self.column
         current_char = self.peek()

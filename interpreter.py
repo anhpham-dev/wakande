@@ -1,7 +1,13 @@
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program
 
 def evaluate(node, environment):
-    if isinstance(node, Number):
+    if isinstance(node, Program):
+        result = None
+        for statement in node.statements:
+            result = evaluate(statement, environment)
+        return result
+    
+    elif isinstance(node, Number):
         return node.value
 
     elif isinstance(node, BinaryExpression):

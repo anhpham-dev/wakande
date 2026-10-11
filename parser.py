@@ -1,5 +1,5 @@
 from lexer import Lexer
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program
 
 class Parser:
     def __init__(self, tokens):
@@ -80,11 +80,19 @@ class Parser:
         return self.parse_expression()
 
     def parse(self):
-        statement = self.parse_statement()
-
-        if self.peek().kind != "EOF":
-            token = self.peek()
-            raise ValueError(f"Unexpected token {token.kind} at line {token.line}, column {token.column}")
-        
-        return statement
+        return self.parse_program()
     
+    def parse_program(self):
+        statements = []
+        while self.peek().kind != "EOF":
+            if self.peek().kind == "NEWLINE":
+                self.advance()
+                continue    
+            statements.append(self.parse_statement())
+            if self.peek().kind == "NEWLINE":
+                self.advance()
+            elif self.peek().kind != "EOF":
+                token = self.peek()
+                raise ValueError(f"Expected newline or EOF, got {token.kind} at line {token.line}, column {token.column}")
+            
+        return Program(statements)
