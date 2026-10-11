@@ -29,6 +29,12 @@ Note:
 Lexer recognition:
 - numbers (int and float)
 - identifiers (var)
-- keywords (reserved keywords like if, else, let, ...)
+- keywords (reserved keywords like while, if, else, let, ...)
 - simple operator (such as + - * /)
 - string and punctuation (text in double quote, symbol like `()`, `,`, `;`)
+
+Rule when collecting chars
+- First char must be a letter or _
+- The remaining char can be either letters, digits or _
+- example: total, my_var, score2, _priv, ....
+- invalid: 2score, my-var

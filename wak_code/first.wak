@@ -1,18 +1,18 @@
-let name = "Alex";
-let score = [87, 93, 100];1
+let name = "Alex"
+let score = [87, 93, 100]
 
 fn avg(val) {
-    let total = 0;
+    let total = 0
 
     for score in values {
-        total = total + score;
+        total = total + score
     }
 
     return total/len(val)
 }
 
 if avg(score) >= 90 {
-    print "Great job, " + name;
+    print "Great job, " + name
 } else {
-    print "Keep going, " + name;
+    print "Keep going, " + name
 }
