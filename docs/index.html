@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn Wakande, a small programming language built from scratch in Python. A guide to running programs, language syntax, and the interpreter.">
+  <meta name="theme-color" content="#f7f8f2">
+  <title>Wakande Documentation</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script src="./assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to documentation</a>
+  <header class="site-header">
+    <a class="brand" href="#overview" aria-label="Wakande documentation home"><span class="brand-mark" aria-hidden="true">w.</span><span>wakande<span class="brand-label"> / docs</span></span></a>
+    <div class="header-actions">
+      <span class="status"><span aria-hidden="true"></span>Experimental</span>
+      <a class="source-link" href="https://github.com/anhpham-dev/wakande">Source code <span aria-hidden="true">↗</span></a>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark theme" aria-pressed="false" hidden><span aria-hidden="true">◐</span></button>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar" hidden>Menu</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Documentation navigation">
+      <form class="search" role="search" hidden>
+        <label class="sr-only" for="docs-search">Search documentation</label>
+        <span aria-hidden="true">⌕</span><input id="docs-search" type="search" placeholder="Find a topic…" autocomplete="off"><kbd>/</kbd>
+      </form>
+      <p class="nav-label">THE DOCUMENTATION</p>
+      <nav>
+        <a href="#overview" class="nav-link active"><span aria-hidden="true">01</span> Introduction</a>
+        <a href="#getting-started" class="nav-link"><span aria-hidden="true">02</span> Getting started</a>
+        <a href="#language" class="nav-link"><span aria-hidden="true">03</span> Language reference</a>
+        <a href="#examples" class="nav-link"><span aria-hidden="true">04</span> Examples</a>
+        <a href="#internals" class="nav-link"><span aria-hidden="true">05</span> How it works</a>
+        <a href="#errors" class="nav-link"><span aria-hidden="true">06</span> Errors &amp; debugging</a>
+        <a href="#roadmap" class="nav-link"><span aria-hidden="true">07</span> Planned syntax</a>
+        <a href="#publishing" class="nav-link"><span aria-hidden="true">08</span> Hosting these docs</a>
+      </nav>
+      <div class="sidebar-note"><span class="tiny-mark" aria-hidden="true">{ }</span><p>A small language.<br>A look under the hood.</p><a href="https://github.com/anhpham-dev/wakande/issues">Discuss on GitHub ↗</a></div>
+    </aside>
+
+    <main id="main" tabindex="-1">
+      <p id="search-status" class="search-status" role="status" aria-live="polite" hidden></p>
+      <section id="overview" class="doc-section hero" aria-labelledby="overview-title">
+        <div class="eyebrow"><span class="eyebrow-line"></span> A LANGUAGE IN THE MAKING</div>
+        <h1 id="overview-title">Meet <span>Wakande.</span></h1>
+        <p class="hero-description">A small programming language, built from scratch in Python. Follow an expression from its first character to its final value.</p>
+        <p><strong>This documentation website was AI-generated.</strong> The Wakande programming language and its interpreter were written by hand by <a href="https://github.com/anhpham-dev">anhpham-dev</a>.</p>
+        <div class="hero-actions"><a href="#getting-started" class="button">Write your first expression <span aria-hidden="true">→</span></a><a href="#internals" class="text-link">Explore the interpreter ↗</a></div>
+        <div class="hero-code">
+          <div class="code-header"><span><span class="file-dot" aria-hidden="true"></span> A little Wakande</span><span class="code-label">SOURCE</span></div>
+          <pre><code data-language="wakande"><span class="token-keyword">let</span> x = <span class="token-number">5</span>
+<span class="token-keyword">let</span> y = <span class="token-number">10</span>
+x + y</code></pre>
+          <div class="code-result"><span class="result-label">FINAL VALUE</span><span class="result-value">15</span><span class="result-note">Three statements. One result.</span></div>
+        </div>
+        <div class="intro-grid">
+          <div><span class="feature-index">01 / LEARN</span><h3>Start small</h3><p>Numbers, variables, and four arithmetic operators. Enough to see a language come together.</p></div>
+          <div><span class="feature-index">02 / EXPLORE</span><h3>Read every step</h3><p>A lexer, a parser, and an evaluator you can follow directly in the Python source.</p></div>
+          <div><span class="feature-index">03 / EXPERIMENT</span><h3>Build understanding</h3><p>A learning project for exploring how programming languages work, one feature at a time.</p></div>
+        </div>
+        <div class="callout"><span class="callout-symbol" aria-hidden="true">i</span><div><strong>These docs describe the current interpreter.</strong><p><code>rule.md</code> and the files in <code>wak_code/</code> also contain design ideas. Strings, lists, functions, control flow, and <code>print</code> are planned syntax; they do not run yet.</p></div></div>
+      </section>
+
+      <section id="getting-started" class="doc-section" aria-labelledby="getting-started-title">
+        <div class="section-kicker">02 / FIRST STEPS</div><h2 id="getting-started-title">Getting started</h2>
+        <p>You need <strong>Python 3.10 or newer</strong> and Git to clone the repository. The interpreter uses the Python standard library, so there are no packages to install.</p>
+        <h3>Run the built-in demo</h3>
+        <div class="code-block"><div class="code-header"><span>Terminal</span></div><pre><code>git clone https://github.com/anhpham-dev/wakande.git
+cd wakande
+python3 wakande.py</code></pre></div>
+        <p>On systems where Python is invoked as <code>python</code>, use that command instead. The demo evaluates <code>let x = --5</code>, <code>let y = 10</code>, and <code>x + y</code>.</p>
+        <div class="code-block output"><div class="code-header"><span>Output</span></div><pre><code>Result: 15
+Variables: {'x': 5, 'y': 10}</code></pre></div>
+        <h3>Run your own source</h3>
+        <p>Create <code>run_example.py</code> in the repository root and use the three interpreter stages directly:</p>
+        <div class="code-block"><div class="code-header"><span>run_example.py · Python</span></div><pre><code data-language="python">from lexer import Lexer
+from parser import Parser
+from interpreter import evaluate
+
+source = """let price = 12
+let quantity = 3
+price * quantity
+"""
+
+tokens = Lexer(source).tokenize()
+program = Parser(tokens).parse()
+environment = {}
+result = evaluate(program, environment)
+
+print("Result:", result)
+print("Variables:", environment)</code></pre></div>
+        <p>Run <code>python3 run_example.py</code>. The result is <code>36</code>, and the environment contains <code>price</code> and <code>quantity</code>.</p>
+        <h3>Read a .wak file</h3>
+        <p>Save supported Wakande syntax in a file such as <code>wak_code/calculation.wak</code>. In your Python runner, replace the <code>source</code> assignment with:</p>
+        <div class="code-block"><div class="code-header"><span>Python</span></div><pre><code data-language="python">from pathlib import Path
+
+source = Path("wak_code/calculation.wak").read_text(encoding="utf-8")</code></pre></div>
+        <p>Run the runner from the repository root so that this relative path resolves correctly. <code>wakande.py</code> currently runs a fixed demo; it does not accept a filename argument or provide a REPL.</p>
+      </section>
+
+      <section id="language" class="doc-section" aria-labelledby="language-title">
+        <div class="section-kicker">03 / THE REFERENCE</div><h2 id="language-title">The language, today</h2>
+        <p>A program is a sequence of declarations and expressions. Separate statements with a newline. Blank lines, spaces, and tabs are accepted; semicolons and comments are not supported.</p>
+        <h3>Numbers</h3><p>Write integers as <code>42</code> and decimals as <code>3.14</code>. Negative values use the unary minus operator, as in <code>-5</code>. Use digits on both sides of the decimal point: <code>0.5</code> works, while <code>.5</code> and <code>5.</code> do not. Exponent notation such as <code>1e3</code> is not supported.</p>
+        <h3>Arithmetic &amp; precedence</h3>
+        <div class="table-wrap"><table><caption class="sr-only">Operators from highest to lowest precedence</caption><thead><tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Value</th></tr></thead><tbody><tr><td><code>(…)</code></td><td>Group an expression</td><td><code>(2 + 3) * 4</code></td><td><code>20</code></td></tr><tr><td><code>-</code> (unary)</td><td>Negate a value</td><td><code>--5</code></td><td><code>5</code></td></tr><tr><td><code>*</code>, <code>/</code></td><td>Multiply, divide</td><td><code>7 / 2</code></td><td><code>3.5</code></td></tr><tr><td><code>+</code>, <code>-</code></td><td>Add, subtract</td><td><code>10 - 3 + 1</code></td><td><code>8</code></td></tr></tbody></table></div>
+        <p>Operators at the same precedence evaluate from left to right. Multiplication and division bind more tightly than addition and subtraction, so <code>2 + 3 * 4</code> produces <code>14</code>. Unary plus, powers, and modulo are not implemented.</p>
+        <p>Integers and floats can be combined: <code>1 + 2.5</code> produces <code>3.5</code>. Arithmetic follows Python's numeric behavior; division returns a float and division by zero raises an error.</p>
+        <h3>Variables</h3><p>Declare a variable with <code>let name = expression</code>, then refer to it by name. Names are case-sensitive. They begin with a letter or underscore and continue with letters, digits, or underscores. The lexer uses Python's character checks, so it also accepts Unicode letters. <code>let</code> is the only reserved keyword.</p>
+        <div class="code-block"><div class="code-header"><span>Wakande</span></div><pre><code data-language="wakande"><span class="token-keyword">let</span> total = <span class="token-number">20</span>
+<span class="token-keyword">let</span> total = total + <span class="token-number">5</span>
+total</code></pre></div>
+        <p>The final value is <code>25</code>. A second <code>let</code> with the same name overwrites its stored value. Bare reassignment such as <code>total = 25</code> is not supported. A name must already exist before you use it in an expression.</p>
+        <h3>Program results &amp; environments</h3><p>The evaluator returns the value of the last statement, including a declaration's assigned value. An empty program returns Python's <code>None</code>. Variables live in the dictionary passed to <code>evaluate</code>; use a new dictionary for a fresh run, or reuse it to keep bindings across evaluations. There are no function or block scopes yet.</p>
+        <div class="callout"><span class="callout-symbol" aria-hidden="true">=</span><div><strong>The equals sign belongs to declarations.</strong><p><code>=</code> sets the initial value in <code>let x = 5</code>. It is not a comparison operator in the current interpreter.</p></div></div>
+      </section>
+
+      <section id="examples" class="doc-section" aria-labelledby="examples-title">
+        <div class="section-kicker">04 / TRY IT YOURSELF</div><h2 id="examples-title">Small programs, real results</h2><p>Use any of these programs as the <code>source</code> string in your Python runner. The result shown is returned by the evaluator; Wakande itself does not have a working <code>print</code> statement yet.</p>
+        <div class="example-grid">
+          <article><h3>A quick calculation</h3><div class="code-block"><div class="code-header"><span>Wakande</span></div><pre><code data-language="wakande"><span class="token-number">2</span> + <span class="token-number">3</span> * <span class="token-number">4</span></code></pre><div class="example-result">Result <strong>14</strong></div></div></article>
+          <article><h3>Change the order</h3><div class="code-block"><div class="code-header"><span>Wakande</span></div><pre><code data-language="wakande">(<span class="token-number">2</span> + <span class="token-number">3</span>) * <span class="token-number">4</span></code></pre><div class="example-result">Result <strong>20</strong></div></div></article>
+          <article><h3>Calculate an average</h3><div class="code-block"><div class="code-header"><span>Wakande</span></div><pre><code data-language="wakande"><span class="token-keyword">let</span> first = <span class="token-number">8</span>
+<span class="token-keyword">let</span> second = <span class="token-number">10</span>
+(first + second) / <span class="token-number">2</span></code></pre><div class="example-result">Result <strong>9.0</strong></div></div></article>
+          <article><h3>Combine decimal values</h3><div class="code-block"><div class="code-header"><span>Wakande</span></div><pre><code data-language="wakande"><span class="token-keyword">let</span> price = <span class="token-number">12.5</span>
+<span class="token-keyword">let</span> quantity = <span class="token-number">4</span>
+price * quantity</code></pre><div class="example-result">Result <strong>50.0</strong></div></div></article>
+        </div>
+      </section>
+
+      <section id="internals" class="doc-section" aria-labelledby="internals-title">
+        <div class="section-kicker">05 / UNDER THE HOOD</div><h2 id="internals-title">From text to a value</h2><p>The interpreter has three stages. Each stage transforms the output of the one before it.</p>
+        <ol class="pipeline"><li><span class="pipeline-step">01</span><strong>Lexer</strong><span>Text → tokens</span></li><li><span class="pipeline-step">02</span><strong>Parser</strong><span>Tokens → tree</span></li><li><span class="pipeline-step">03</span><strong>Evaluator</strong><span>Tree → value</span></li></ol>
+        <h3>1. Tokenize the source</h3><p><a href="https://github.com/anhpham-dev/wakande/blob/main/lexer.py"><code>lexer.py</code> ↗</a> reads characters and produces <code>Token</code> objects with a <code>kind</code>, <code>value</code>, <code>line</code>, and <code>column</code>. Positions start at 1. Newlines become <code>NEWLINE</code> tokens, and every token stream ends with <code>EOF</code>.</p>
+        <div class="code-block"><div class="code-header"><span>Token kinds for 2 + 3 * 4</span></div><pre><code>NUMBER PLUS NUMBER STAR NUMBER EOF</code></pre></div>
+        <h3>2. Build an abstract syntax tree</h3><p><a href="https://github.com/anhpham-dev/wakande/blob/main/parser.py"><code>parser.py</code> ↗</a> uses recursive descent. <code>parse_factor</code> handles numbers, variable references, parentheses, and unary minus; <code>parse_term</code> handles multiplication and division; <code>parse_expression</code> handles addition and subtraction. <code>parse_program</code> collects statements into a <code>Program</code>.</p>
+        <div class="code-block"><div class="code-header"><span>Tree shape for 2 + 3 * 4</span></div><pre><code>BinaryExpression (+)
+├── Number (2)
+└── BinaryExpression (*)
+    ├── Number (3)
+    └── Number (4)</code></pre></div>
+        <p><a href="https://github.com/anhpham-dev/wakande/blob/main/ast_nodes.py"><code>ast_nodes.py</code> ↗</a> defines six dataclasses: <code>Number</code>, <code>BinaryExpression</code>, <code>Variable</code>, <code>VariableDeclaration</code>, <code>Program</code>, and <code>UnaryExpression</code>. Expression operators hold the lexer tokens used by the evaluator.</p>
+        <h3>3. Evaluate the tree</h3><p><a href="https://github.com/anhpham-dev/wakande/blob/main/interpreter.py"><code>interpreter.py</code> ↗</a> walks the tree recursively. It evaluates operands, applies arithmetic, stores declarations in the environment, and looks up variable references. For a <code>Program</code>, it evaluates statements in order and returns the last value.</p>
+        <h3>Inspect a run</h3><p>Add these lines to your Python runner after parsing and evaluating:</p>
+        <div class="code-block"><div class="code-header"><span>Python</span></div><pre><code data-language="python">for token in tokens:
+    print(token)
+
+print(program)
+print(environment)</code></pre></div>
+      </section>
+
+      <section id="errors" class="doc-section" aria-labelledby="errors-title">
+        <div class="section-kicker">06 / WHEN SOMETHING BREAKS</div><h2 id="errors-title">Errors &amp; debugging</h2><p>Lexer and parser failures generally raise <code>ValueError</code>. Some include a line and column. Runtime failures use Python exceptions; the demo does not catch them, so you will see a traceback.</p>
+        <div class="table-wrap"><table><caption class="sr-only">Common errors and how to resolve them</caption><thead><tr><th>Input</th><th>What happened</th><th>How to fix it</th></tr></thead><tbody><tr><td><code>12score</code></td><td>Invalid number identifier</td><td>Start a name with a letter or <code>_</code>; separate numbers and names with an operator.</td></tr><tr><td><code>2 +</code></td><td>Expected an expression</td><td>Provide the right operand on the same line.</td></tr><tr><td><code>(2 + 3</code></td><td>Expected <code>)</code></td><td>Close the opening parenthesis.</td></tr><tr><td><code>let = 5</code></td><td>Expected a variable name</td><td>Put an identifier after <code>let</code>.</td></tr><tr><td><code>let x 5</code></td><td>Expected an equal sign</td><td>Use <code>let x = 5</code>.</td></tr><tr><td><code>missing + 1</code></td><td>Undefined variable</td><td>Declare <code>missing</code> before using it.</td></tr><tr><td><code>1 2</code></td><td>Expected newline or EOF</td><td>Add an operator or put the second statement on a new line.</td></tr><tr><td><code>"hello"</code> or <code>1;</code></td><td>Invalid character</td><td>Use supported numeric syntax and newline separators.</td></tr><tr><td><code>1 / 0</code></td><td><code>ZeroDivisionError</code></td><td>Use a nonzero divisor.</td></tr></tbody></table></div>
+        <p>Expressions cannot continue across newlines, even inside parentheses. If an error is unclear, inspect the token stream first, then the parsed tree. When evaluating into a reused environment, declarations completed before a runtime error remain in that dictionary.</p>
+      </section>
+
+      <section id="roadmap" class="doc-section" aria-labelledby="roadmap-title">
+        <div class="section-kicker">07 / LOOKING AHEAD</div><h2 id="roadmap-title">Ideas for the language</h2><p><a href="https://github.com/anhpham-dev/wakande/blob/main/rule.md"><code>rule.md</code> ↗</a> sketches a broader language. These are design notes, not supported features or a release schedule.</p>
+        <div class="planned-list"><div><strong>Values</strong><p>Strings, booleans, and lists alongside numbers.</p></div><div><strong>Comparisons &amp; branching</strong><p>Comparison operators and <code>if</code> / <code>else</code> blocks.</p></div><div><strong>Functions &amp; scope</strong><p><code>fn</code> declarations and variables local to a function.</p></div><div><strong>Built-ins</strong><p><code>print</code>, <code>len</code>, and <code>range</code>.</p></div></div>
+        <div class="callout"><span class="callout-symbol" aria-hidden="true">i</span><div><strong>The existing .wak samples are aspirational.</strong><p><code>wak_code/helloworld.wak</code> uses strings and printing. <code>wak_code/first.wak</code> explores lists, a function, a loop, and branching. Neither file runs in the current interpreter.</p></div></div>
+        <p>When extending Wakande, update the lexer, AST nodes, parser, and evaluator as needed. Check both a successful example and an invalid input, then update these docs to describe the new behavior.</p>
+      </section>
+
+      <section id="publishing" class="doc-section" aria-labelledby="publishing-title">
+        <div class="section-kicker">08 / ON THE WEB</div><h2 id="publishing-title">Host on GitHub Pages</h2><p>This documentation is a static site. All assets live in <code>docs/</code> and use relative paths, so it works under the repository's <code>/wakande/</code> URL. No build or dependency installation is required.</p>
+        <ol class="instructions"><li>Commit and push the <code>docs/</code> folder to the branch you want to publish.</li><li>In the GitHub repository, open <strong>Settings → Pages</strong>.</li><li>Under <strong>Build and deployment</strong>, choose <strong>Deploy from a branch</strong>.</li><li>Select your publishing branch and the <strong>/docs</strong> folder, then click <strong>Save</strong>.</li></ol>
+        <p>With the default GitHub Pages domain, this repository's site will be at <a href="https://anhpham-dev.github.io/wakande/">anhpham-dev.github.io/wakande/</a> once deployment succeeds. Check the repository's Pages settings or Actions runs for deployment status. See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">GitHub's publishing source guide ↗</a> for details.</p>
+        <h3>Preview locally</h3><p>From the repository root, run:</p>
+        <div class="code-block"><div class="code-header"><span>Terminal</span></div><pre><code>python3 -m http.server 8000 --directory docs</code></pre></div>
+        <p>Open <a href="http://localhost:8000">localhost:8000</a>. Edit <code>docs/index.html</code> for content, <code>docs/assets/styles.css</code> for appearance, and <code>docs/assets/app.js</code> for search, navigation, theme selection, and copy buttons.</p>
+      </section>
+
+      <footer><a class="footer-brand" href="#overview">wakande.</a><p>Built to understand how languages work.</p><a href="https://github.com/anhpham-dev/wakande">View the project ↗</a></footer>
+    </main>
+  </div>
+</body>
+</html>
