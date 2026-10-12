@@ -113,5 +113,49 @@ class TestInterpreter(unittest.TestCase):
         self.assertIs(result, True)
         self.assertIs(variable["enable"], True)
 
+    def test_logical_not(self):
+        result, _ = run_source("not true")
+        self.assertIs(result, False)
+
+    def test_double_not(self):
+        result, _ = run_source("not not true")
+        self.assertIs(result, True)
+
+
+    def test_logical_and(self):
+        result, _ = run_source("true and false")
+        self.assertIs(result, False)
+
+
+    def test_logical_or(self):
+        result, _ = run_source("true or false")
+        self.assertIs(result, True)
+
+
+    def test_and_has_higher_precedence_than_or(self):
+        result, _ = run_source("true or false and false")
+        self.assertIs(result, True)
+
+
+    def test_comparison_with_logical_operators(self):
+        result, _ = run_source("5 > 3 and 2 < 4")
+        self.assertIs(result, True)
+
+
+    def test_logical_expression_with_variables(self):
+        result, variables = run_source(
+            "let age = 20\n"
+            "let has_permission = true\n"
+            "age >= 18 and has_permission"
+        )
+
+        self.assertIs(result, True)
+        self.assertIs(variables["has_permission"], True)
+
+
+    def test_not_rejects_numbers(self):
+        with self.assertRaises(TypeError):
+            run_source("not 5")
+
 if __name__ == "__main__":
     unittest.main()

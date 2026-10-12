@@ -42,6 +42,10 @@ class Parser:
             operator = self.advance()
             operand = self.parse_factor()
             return UnaryExpression(operator, operand)
+        elif token.kind == "NOT":
+            operator = self.advance()
+            operand = self.parse_factor()
+            return UnaryExpression(operator, operand)
         elif token.kind == "TRUE":
             self.advance()
             return Boolean(True)
@@ -86,14 +90,14 @@ class Parser:
             raise ValueError(f"Expected an equal sign, got {token.kind} at line {token.line}, column {token.column}")
         self.advance()
 
-        initializer = self.parse_expression()
+        initializer = self.parse_or()
         return VariableDeclaration(var_name, initializer)
 
     def parse_statement(self):
         if self.peek().kind == "LET":
             return self.parse_variable_declaration()
         
-        return self.parse_comparison()
+        return self.parse_or()
 
     def parse(self):
         return self.parse_program()
@@ -122,4 +126,23 @@ class Parser:
             right = self.parse_expression()
             expression = ComparisonExpression(expression, operator, right)
 
+        return expression
+    
+    def parse_and(self):
+        expression = self.parse_comparison()
+
+        while self.peek().kind == "AND":
+            operator = self.advance()
+            right = self.parse_comparison()
+            expression = BinaryExpression(expression, operator, right)
+
+        return expression
+        
+    def parse_or(self):
+        expression = self.parse_and()
+        while self.peek().kind == "OR":
+            operator = self.advance()
+            right = self.parse_and()
+            expression = BinaryExpression(expression, operator, right)
+        
         return expression

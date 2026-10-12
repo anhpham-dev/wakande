@@ -3,12 +3,10 @@ from parser import Parser
 from interpreter import evaluate
 
 source = """
-let x = 15
-let y = 10
-let z = 3 * x
+let age = 16
+let has_permission = true
 
-z + x / y > 14
-
+age >= 18 or has_permission
 """
 
 lexer = Lexer(source)

@@ -20,6 +20,8 @@ class Lexer:
             "=": "EQUALS",
             "<": "LESS",
             ">": "GREATER",
+            "{": "LBRACE",
+            "}": "RBRACE",
         }
         self.DOUBLE_CHAR_TOKEN = {
             "==": "EQUAL_EQUAL",
@@ -31,6 +33,11 @@ class Lexer:
             "let": "LET",
             "true": "TRUE",
             "false": "FALSE",
+            "and": "AND",
+            "or": "OR",
+            "not": "NOT",
+            "if": "IF",
+            "else": "ELSE",
         }
         self.source = source
         self.line = 1
