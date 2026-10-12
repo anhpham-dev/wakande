@@ -1,6 +1,6 @@
 from ast_nodes import ComparisonExpression
 from lexer import Lexer
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean, IfStatement
 
 class Parser:
     def __init__(self, tokens):
@@ -97,6 +97,9 @@ class Parser:
         if self.peek().kind == "LET":
             return self.parse_variable_declaration()
         
+        if self.peek().kind == "IF":
+            return self.parse_if_statement()
+
         return self.parse_or()
 
     def parse(self):
@@ -146,3 +149,43 @@ class Parser:
             expression = BinaryExpression(expression, operator, right)
         
         return expression
+    
+    def parse_block(self):
+        if self.peek().kind != "LBRACE":
+            token = self.peek()
+            raise ValueError(f"Expected '{{', got {token.kind} at line {token.line}, column {token.column}")
+        
+        self.advance()
+        statements = []
+        while self.peek().kind not in ("RBRACE", "EOF"):
+            if self.peek().kind == "NEWLINE":
+                self.advance()
+                continue
+
+            statements.append(self.parse_statement())
+
+            if self.peek().kind == "NEWLINE":
+                self.advance()
+            elif self.peek().kind not in ("RBRACE", "EOF"):
+                token = self.peek()
+                raise ValueError(f"Expected newline or '}}', got {token.kind} at line {token.line}, column {token.column}")
+        
+        if self.peek().kind == "EOF":
+            token = self.peek()
+            raise ValueError(f"Expected '}}' before end of input at line {token.line}, column: {token.column}")
+
+        self.advance()
+        return statements
+    
+
+    def parse_if_statement(self):
+        self.advance()
+        condition = self.parse_or()
+        then_branch = self.parse_block()
+        else_branch = None
+
+        if self.peek().kind == "ELSE":
+            self.advance()
+            else_branch = self.parse_block()
+        
+        return IfStatement(condition=condition, then_branch=then_branch, else_branch=else_branch)

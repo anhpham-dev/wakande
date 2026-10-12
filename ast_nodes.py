@@ -37,3 +37,9 @@ class ComparisonExpression:
 @dataclass
 class Boolean:
     value: bool
+
+@dataclass
+class IfStatement:
+    condition: object
+    then_branch: list
+    else_branch: list | None

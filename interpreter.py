@@ -1,4 +1,4 @@
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean, ComparisonExpression
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean, ComparisonExpression, IfStatement
 
 def evaluate(node, environment):
     if isinstance(node, Program):
@@ -7,6 +7,24 @@ def evaluate(node, environment):
             result = evaluate(statement, environment)
         return result
     
+    elif isinstance(node, IfStatement):
+        condition = evaluate(node.condition, environment)
+        if not isinstance(condition, bool):
+            raise TypeError("An if condition must be a boolean")
+
+        if condition:
+            branch = node.then_branch
+        else:
+            branch = node.else_branch
+        
+        result = None
+
+        if branch is not None:
+            for statement in branch:
+                result = evaluate(statement, environment)
+        
+        return result
+
     elif isinstance(node, Number):
         return node.value
 

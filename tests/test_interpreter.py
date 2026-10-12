@@ -157,5 +157,63 @@ class TestInterpreter(unittest.TestCase):
         with self.assertRaises(TypeError):
             run_source("not 5")
 
+    def test_if_true(self):
+        result, environment = run_source(
+            "if true {\n"
+            "    let x = 10\n"
+            "}"
+        )
+
+        self.assertEqual(environment["x"], 10)
+
+    def test_if_true(self):
+        result, environment = run_source(
+            "if true {\n"
+            "    let x = 10\n"
+            "}"
+        )
+
+        self.assertEqual(environment["x"], 10)
+
+    def test_if_else(self):
+        result, environment = run_source(
+            "if false {\n"
+            "    let x = 10\n"
+            "} else {\n"
+            "    let x = 20\n"
+            "}"
+        )
+
+        self.assertEqual(environment["x"], 20)
+
+    def test_if_with_comparison(self):
+        result, environment = run_source(
+            "let age = 20\n"
+            "if age >= 18 {\n"
+            "    let allowed = true\n"
+            "}"
+        )
+
+        self.assertIs(environment["allowed"], True)
+
+    def test_nested_if_else(self):
+        source = (
+            "let age = 20\n"
+            "let has_permission = true\n"
+            "if age >= 18 {\n"
+            "    if has_permission {\n"
+            "        let access = true\n"
+            "    } else {\n"
+            "        let access = false\n"
+            "    }\n"
+            "} else {\n"
+            "    let access = false\n"
+            "}"
+        )
+
+        result, environment = run_source(source)
+
+        self.assertIs(environment["access"], True)
+
 if __name__ == "__main__":
     unittest.main()
