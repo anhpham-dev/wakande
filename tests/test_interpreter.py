@@ -99,5 +99,19 @@ class TestInterpreter(unittest.TestCase):
         result, _ = run_source("let x = 10\n x >= 10")
         self.assertIs(result, True)
 
+    def test_true_literal(self):
+        result, _ = run_source("true")
+        self.assertIs(result, True)
+    
+    def test_false_literal(self):
+        result, _ = run_source("false")
+        self.assertIs(result, False)
+
+    def test_boolean_variable(self):
+        result, variable = run_source("let enable = true\nenable")
+        
+        self.assertIs(result, True)
+        self.assertIs(variable["enable"], True)
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,6 @@
 from ast_nodes import ComparisonExpression
 from lexer import Lexer
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean
 
 class Parser:
     def __init__(self, tokens):
@@ -42,6 +42,12 @@ class Parser:
             operator = self.advance()
             operand = self.parse_factor()
             return UnaryExpression(operator, operand)
+        elif token.kind == "TRUE":
+            self.advance()
+            return Boolean(True)
+        elif token.kind == "FALSE":
+            self.advance()
+            return Boolean(False)
         elif self.peek().kind == "NUMBER":
             return self.parse_number()
         elif self.peek().kind == "LPAREN":

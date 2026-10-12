@@ -33,3 +33,7 @@ class ComparisonExpression:
     left: object
     operator: object
     right: object
+
+@dataclass
+class Boolean:
+    value: bool

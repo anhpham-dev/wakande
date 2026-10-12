@@ -1,4 +1,4 @@
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, ComparisonExpression
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean, ComparisonExpression
 
 def evaluate(node, environment):
     if isinstance(node, Program):
@@ -59,3 +59,5 @@ def evaluate(node, environment):
         if node.operator.kind == "GREATER_EQUAL":
             return left_val >= right_val
             
+    elif isinstance(node, Boolean):
+        return node.value

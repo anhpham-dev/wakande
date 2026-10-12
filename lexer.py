@@ -29,6 +29,8 @@ class Lexer:
         }
         self.KEYWORDS = {
             "let": "LET",
+            "true": "TRUE",
+            "false": "FALSE",
         }
         self.source = source
         self.line = 1

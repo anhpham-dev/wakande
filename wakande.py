@@ -21,4 +21,4 @@ environment = {}
 result = evaluate(ast, environment)
 
 print("Result:", result)
-print("Variables:", environment)
+print("Variables:", environment)    
