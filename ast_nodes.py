@@ -43,3 +43,8 @@ class IfStatement:
     condition: object
     then_branch: list
     else_branch: list | None
+
+@dataclass
+class Assignment:
+    name: str
+    value: object

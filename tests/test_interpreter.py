@@ -3,7 +3,7 @@ import unittest
 from lexer import Lexer
 from parser import Parser
 from interpreter import evaluate
-from ast_nodes import ComparisonExpression
+from ast_nodes import ComparisonExpression, Assignment
 
 def run_source(source):
     tokens = Lexer(source).tokenize()
@@ -214,6 +214,41 @@ class TestInterpreter(unittest.TestCase):
         result, environment = run_source(source)
 
         self.assertIs(environment["access"], True)
+    
+    def test_assignment_parsing(self):
+        tokens = Lexer("count = 5").tokenize()
+        ast = Parser(tokens).parse()
+
+        self.assertIsInstance(ast.statements[0], Assignment)
+        self.assertEqual(ast.statements[0].name, "count")
+
+    def test_assignment(self):
+        result, environment = run_source("let count = 10\ncount = 15")
+
+        self.assertEqual(environment["count"], 15)
+        self.assertEqual(result, 15)
+    
+    def test_assignment_with_expression(self):
+        result, environment = run_source("let count = 10\ncount = count + 5")
+
+        self.assertEqual(environment["count"], 15)
+        self.assertEqual(result, 15)
+    
+    def test_assignment_undefined_variable(self):
+        with self.assertRaisesRegex(ValueError, "Undefined variable: count"):
+            run_source("count = 5")
+
+    def test_failed_assignment_did_not_create_variable(self):
+        environment = {}
+
+        tokens = Lexer("count = 5").tokenize()
+        ast = Parser(tokens).parse()
+
+        with self.assertRaises(ValueError):
+            evaluate(ast, environment)
+        
+        self.assertNotIn("count", environment)
+
 
 if __name__ == "__main__":
     unittest.main()

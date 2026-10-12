@@ -1,4 +1,4 @@
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean, ComparisonExpression, IfStatement
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean, ComparisonExpression, IfStatement, Assignment
 
 def evaluate(node, environment):
     if isinstance(node, Program):
@@ -76,6 +76,14 @@ def evaluate(node, environment):
     
     elif isinstance(node, VariableDeclaration):
         value = evaluate(node.initializer, environment)
+        environment[node.name] = value
+        return value
+    
+    elif isinstance(node, Assignment):
+        if node.name not in environment:
+            raise ValueError(f"Undefined variable: {node.name}")
+        
+        value = evaluate(node.value, environment)
         environment[node.name] = value
         return value
 

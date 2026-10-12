@@ -1,3 +1,5 @@
+from ast_nodes import Assignment
+from ast import Assign
 from ast_nodes import ComparisonExpression
 from lexer import Lexer
 from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, Boolean, IfStatement
@@ -99,6 +101,12 @@ class Parser:
         
         if self.peek().kind == "IF":
             return self.parse_if_statement()
+
+        if self.peek().kind == "IDENTIFIER" and self.peek(1).kind == "EQUALS":
+            name = self.advance().value
+            self.advance()
+            value = self.parse_or()
+            return Assignment(name, value)
 
         return self.parse_or()
 
