@@ -18,6 +18,14 @@ class Lexer:
             "(": "LPAREN",
             ")": "RPAREN",
             "=": "EQUALS",
+            "<": "LESS",
+            ">": "GREATER",
+        }
+        self.DOUBLE_CHAR_TOKEN = {
+            "==": "EQUAL_EQUAL",
+            "!=": "NOT_EQUAL",
+            "<=": "LESS_EQUAL",
+            ">=": "GREATER_EQUAL",
         }
         self.KEYWORDS = {
             "let": "LET",
@@ -83,6 +91,9 @@ class Lexer:
             return Token("EOF", None, line, col)
         elif current_char.isdigit():
             return self.read_numbers()
+        elif current_char + self.peek(1) in self.DOUBLE_CHAR_TOKEN:
+            operator = self.advance() + self.advance()
+            return Token(self.DOUBLE_CHAR_TOKEN[operator], operator, line, col)
         elif current_char in self.SINGLE_CHAR_TOKEN:
             char = self.advance()
             return Token(self.SINGLE_CHAR_TOKEN[char], char, line, col)

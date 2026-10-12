@@ -1,3 +1,4 @@
+from ast_nodes import ComparisonExpression
 from lexer import Lexer
 from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression
 
@@ -55,7 +56,7 @@ class Parser:
             return Variable(current_token.value)
         else:
             # token = self.peek()
-            raise ValueError(f"Expected a number or '(', got {token.kind} at line {token.line}, column {token.column}")
+            raise ValueError(f"Expected a number 1or '(', got {token.kind} at line {token.line}, column {token.column}")
 
     def parse_term(self):
         left = self.parse_factor()
@@ -86,7 +87,7 @@ class Parser:
         if self.peek().kind == "LET":
             return self.parse_variable_declaration()
         
-        return self.parse_expression()
+        return self.parse_comparison()
 
     def parse(self):
         return self.parse_program()
@@ -105,3 +106,14 @@ class Parser:
                 raise ValueError(f"Expected newline or EOF, got {token.kind} at line {token.line}, column {token.column}")
             
         return Program(statements)
+
+    def parse_comparison(self):
+        expression = self.parse_expression()
+        comparison_operators = ["EQUAL_EQUAL", "NOT_EQUAL", "LESS", "GREATER", "LESS_EQUAL", "GREATER_EQUAL"]
+
+        while self.peek().kind in comparison_operators:
+            operator = self.advance()
+            right = self.parse_expression()
+            expression = ComparisonExpression(expression, operator, right)
+
+        return expression

@@ -1,4 +1,4 @@
-from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression
+from ast_nodes import Number, BinaryExpression, Variable, VariableDeclaration, Program, UnaryExpression, ComparisonExpression
 
 def evaluate(node, environment):
     if isinstance(node, Program):
@@ -41,3 +41,21 @@ def evaluate(node, environment):
 
         if node.operator.kind == "MINUS":
             return -operand
+    
+    elif isinstance(node, ComparisonExpression):
+        left_val = evaluate(node.left, environment)
+        right_val = evaluate(node.right, environment)
+
+        if node.operator.kind == "EQUAL_EQUAL":
+            return left_val == right_val
+        if node.operator.kind == "NOT_EQUAL":
+            return left_val != right_val
+        if node.operator.kind == "LESS":
+            return left_val < right_val
+        if node.operator.kind == "GREATER":
+            return left_val > right_val
+        if node.operator.kind == "LESS_EQUAL":
+            return left_val <= right_val
+        if node.operator.kind == "GREATER_EQUAL":
+            return left_val >= right_val
+            

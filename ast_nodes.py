@@ -27,3 +27,9 @@ class Program:
 class UnaryExpression:
     operator: object
     operand: object
+
+@dataclass
+class ComparisonExpression:
+    left: object
+    operator: object
+    right: object
